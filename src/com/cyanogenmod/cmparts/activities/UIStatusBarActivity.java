@@ -53,8 +53,7 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
 
     private static final String PREF_STATUS_BAR_CM_SIGNAL = "pref_status_bar_cm_signal";
 
-   /* private static final String PREF_STATUS_BAR_HEADSET = "pref_status_bar_headset";
-    */
+    private static final String PREF_STATUS_BAR_HEADSET = "pref_status_bar_headset";
 
     private ListPreference mStatusBarAmPm;
 
@@ -70,8 +69,7 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
 
     private CheckBoxPreference mStatusBarBrightnessControl;
 
-   /* private CheckBoxPreference mStatusBarHeadset;
-    */
+    private CheckBoxPreference mStatusBarHeadset;
 
     private EditTextPreference mStatusBarCarrierLabelCustom;
 
@@ -89,9 +87,8 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
                 .findPreference(PREF_STATUS_BAR_COMPACT_CARRIER);
         mStatusBarBrightnessControl = (CheckBoxPreference) prefSet
                 .findPreference(PREF_STATUS_BAR_BRIGHTNESS_CONTROL);
-       /* mStatusBarHeadset = (CheckBoxPreference) prefSet
+        mStatusBarHeadset = (CheckBoxPreference) prefSet
                 .findPreference(PREF_STATUS_BAR_HEADSET);
-	*/
 
         mStatusBarClock.setChecked((Settings.System.getInt(getContentResolver(),
                 Settings.System.STATUS_BAR_CLOCK, 1) == 1));
@@ -99,9 +96,8 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
                 Settings.System.STATUS_BAR_COMPACT_CARRIER, 0) == 1));
         mStatusBarBrightnessControl.setChecked((Settings.System.getInt(getContentResolver(),
                 Settings.System.STATUS_BAR_BRIGHTNESS_TOGGLE, 0) == 1));
-       /* mStatusBarHeadset.setChecked((Settings.System.getInt(getContentResolver(),
+        mStatusBarHeadset.setChecked((Settings.System.getInt(getContentResolver(),
                 Settings.System.STATUS_BAR_HEADSET, 1) == 1));
-	*/
 
         try {
             if (Settings.System.getInt(getContentResolver(), 
@@ -117,7 +113,7 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
         mStatusBarCmSignal = (ListPreference) prefSet.findPreference(PREF_STATUS_BAR_CM_SIGNAL);
 
         int statusBarAmPm = Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_AM_PM, 1);
+                Settings.System.STATUS_BAR_AM_PM, 2);
         mStatusBarAmPm.setValue(String.valueOf(statusBarAmPm));
         mStatusBarAmPm.setOnPreferenceChangeListener(this);
 
@@ -147,12 +143,12 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
         }
 
         int statusBarCarrierLabel = Settings.System.getInt(getContentResolver(),
-                Settings.System.CARRIER_LABEL_TYPE, 3);
+                Settings.System.CARRIER_LABEL_TYPE, 0);
         String statusBarCarrierLabelCustom = Settings.System.getString(getContentResolver(),
                 Settings.System.CARRIER_LABEL_CUSTOM_STRING);
 
         if (statusBarCarrierLabelCustom == null) {
-            statusBarCarrierLabelCustom = "IHO OM-Mandylion";
+            statusBarCarrierLabelCustom = "CyanogenMod 7";
             Settings.System.putString(getContentResolver(),
                     Settings.System.CARRIER_LABEL_CUSTOM_STRING,
                     statusBarCarrierLabelCustom);
@@ -218,13 +214,11 @@ public class UIStatusBarActivity extends PreferenceActivity implements OnPrefere
             Settings.System.putInt(getContentResolver(),
                     Settings.System.STATUS_BAR_BRIGHTNESS_TOGGLE, value ? 1 : 0);
             return true;
-       /* } else if (preference == mStatusBarHeadset) {
+        } else if (preference == mStatusBarHeadset) {
             value = mStatusBarHeadset.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_HEADSET,
                     value ? 1 : 0);
             return true;
-	*/
-
         }
         return false;
     }

@@ -67,7 +67,7 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
 
     private static final String USE_DITHERING_PERSIST_PROP = "persist.sys.use_dithering";
     
-    private static final String USE_DITHERING_DEFAULT = "0";
+    private static final String USE_DITHERING_DEFAULT = "1";
 
     private static final String USE_16BPP_ALPHA_PREF = "pref_use_16bpp_alpha";
 
@@ -208,7 +208,7 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
 
         if (preference == mUseDitheringPref) {
             SystemProperties.set(USE_DITHERING_PERSIST_PROP,
-                    mUseDitheringPref.isChecked() ? "1" : "1");
+                    mUseDitheringPref.isChecked() ? "1" : "0");
             return true;
         }
 
@@ -223,7 +223,7 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
                     mPurgeableAssetsPref.isChecked() ? "1" : "0");
             return true;
         }
-        
+
         if (preference == mDisableBootanimPref) {
             SystemProperties.set(DISABLE_BOOTANIMATION_PERSIST_PROP,
                     mDisableBootanimPref.isChecked() ? "1" : "0");
