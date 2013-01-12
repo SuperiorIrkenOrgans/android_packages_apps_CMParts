@@ -22,7 +22,7 @@
 		<CheckBoxPreference android:key="pref_status_bar_compact_carrier"
 			android:title="@string/ui_status_bar_compact_carrier_title"
 			android:summary="@string/ui_status_bar_compact_carrier_summary"
-			android:defaultValue="falses" />
+			android:defaultValue="true" />
 		<ListPreference android:key="pref_status_bar_carrier_label"
 			android:dialogTitle="@string/ui_status_bar_carrier_label_title"
 			android:title="@string/ui_status_bar_carrier_label_title"
@@ -33,7 +33,7 @@
 			android:dialogTitle="@string/ui_status_bar_carrier_label_custom_title"
 			android:title="@string/ui_status_bar_carrier_label_custom_title"
 			android:summary="@string/ui_status_bar_carrier_label_custom_summary"
-			android:defaultValue="CyanogenMod 7" />
+			android:defaultValue="IHO OM-Mandylion" />
 		<ListPreference android:key="pref_status_bar_cm_signal"
 			android:dialogTitle="@string/ui_status_bar_cm_signal_text_title"
 			android:title="@string/ui_status_bar_cm_signal_text_title"
@@ -44,10 +44,10 @@
 			android:title="@string/ui_status_bar_toggle_brightness"
 			android:summary="@string/ui_status_bar_toggle_brightness_summary"
 			android:defaultValue="falses" />
-		<CheckBoxPreference android:key="pref_status_bar_headset"
+<!--		<CheckBoxPreference android:key="pref_status_bar_headset"
 			android:title="@string/ui_status_bar_headset_title"
 			android:summary="@string/ui_status_bar_headset_summary"
-			android:defaultValue="true" />
+			android:defaultValue="falses" /> -->
 	</PreferenceCategory>
 
 </PreferenceScreen>

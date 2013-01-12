@@ -56,14 +56,15 @@ public class GestureListActivity extends ListActivity {
 
     private static final int REQUEST_NEW_GESTURE = 1;
 
+    private final File mStoreFile = new File(Environment.getDataDirectory(), "/misc/lockscreen_gestures");
+
     private final Comparator<NamedGesture> mSorter = new Comparator<NamedGesture>() {
         public int compare(NamedGesture object1, NamedGesture object2) {
             return object1.name.compareTo(object2.name);
         }
     };
 
-    private static final File sStoreFile = new File(Environment.getDataDirectory(), "/misc/lockscreen_gestures");
-    private static GestureLibrary sStore = createStore();
+    private static GestureLibrary sStore;
 
     private GesturesAdapter mAdapter;
     private GesturesLoadTask mTask;
@@ -78,14 +79,13 @@ public class GestureListActivity extends ListActivity {
         mAdapter = new GesturesAdapter(this);
         setListAdapter(mAdapter);
 
+        if (sStore == null) {
+            sStore = GestureLibraries.fromFile(mStoreFile);
+        }
         mEmpty = (TextView) findViewById(android.R.id.empty);
         loadGestures();
 
         registerForContextMenu(getListView());
-    }
-
-    static GestureLibrary createStore() {
-        return GestureLibraries.fromFile(sStoreFile);
     }
 
     static GestureLibrary getStore() {
@@ -202,15 +202,13 @@ public class GestureListActivity extends ListActivity {
         protected Integer doInBackground(Void... params) {
             if (isCancelled()) return STATUS_CANCELLED;
 
-            synchronized(sStore) {
-                sStore = createStore();
-            }
+            final GestureLibrary store = sStore;
 
-            if (sStore.load()) {
-                for (String name : sStore.getGestureEntries()) {
+            if (store.load()) {
+                for (String name : store.getGestureEntries()) {
                     if (isCancelled()) break;
 
-                    for (Gesture gesture : sStore.getGestures(name)) {
+                    for (Gesture gesture : store.getGestures(name)) {
                         final Bitmap bitmap = gesture.toBitmap(mThumbnailSize, mThumbnailSize,
                                 mThumbnailInset, mPathColor);
                         final NamedGesture namedGesture = new NamedGesture();
@@ -251,7 +249,7 @@ public class GestureListActivity extends ListActivity {
                 getListView().setVisibility(View.GONE);
                 mEmpty.setVisibility(View.VISIBLE);
                 mEmpty.setText(getString(R.string.gestures_error_loading,
-                        sStoreFile.getAbsolutePath()));
+                        mStoreFile.getAbsolutePath()));
             } else {
                 findViewById(R.id.addButton).setEnabled(true);
                 checkForEmpty();

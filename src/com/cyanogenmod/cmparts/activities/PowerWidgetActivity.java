@@ -18,7 +18,6 @@ package com.cyanogenmod.cmparts.activities;
 
 import com.android.internal.telephony.Phone;
 
-import android.content.ContentResolver;
 import android.net.wimax.WimaxHelper;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -57,7 +56,7 @@ public class PowerWidgetActivity extends PreferenceActivity implements OnPrefere
 
     MultiSelectListPreference mBrightnessMode;
     ListPreference mNetworkMode;
-    ListPreference mScreenTimeoutMode;
+    ListPreference mScreentimeoutMode;
     MultiSelectListPreference mRingMode;
     ListPreference mFlashMode;
     ListPreference mMobileDataNetworkMode;
@@ -75,8 +74,8 @@ public class PowerWidgetActivity extends PreferenceActivity implements OnPrefere
         mBrightnessMode.setOnPreferenceChangeListener(this);
         mNetworkMode = (ListPreference) prefSet.findPreference(EXP_NETWORK_MODE);
         mNetworkMode.setOnPreferenceChangeListener(this);
-        mScreenTimeoutMode = (ListPreference) prefSet.findPreference(EXP_SCREENTIMEOUT_MODE);
-        mScreenTimeoutMode.setOnPreferenceChangeListener(this);
+        mScreentimeoutMode = (ListPreference) prefSet.findPreference(EXP_SCREENTIMEOUT_MODE);
+        mScreentimeoutMode.setOnPreferenceChangeListener(this);
         mRingMode = (MultiSelectListPreference) prefSet.findPreference(EXP_RING_MODE);
         mRingMode.setValue(Settings.System.getString(getContentResolver(), Settings.System.EXPANDED_RING_MODE));
         mRingMode.setOnPreferenceChangeListener(this);
@@ -115,7 +114,11 @@ public class PowerWidgetActivity extends PreferenceActivity implements OnPrefere
             cb.setTitle(button.getTitleResId());
 
             // set our checked state
-            cb.setChecked(buttonList.contains(button.getId()));
+            if(buttonList.contains(button.getId())) {
+                cb.setChecked(true);
+            } else {
+                cb.setChecked(false);
+            }
 
             // add to our prefs set
             mCheckBoxPrefs.put(cb, button.getId());
@@ -127,28 +130,25 @@ public class PowerWidgetActivity extends PreferenceActivity implements OnPrefere
                 mFlashMode.setEnabled(false);
             } else if (PowerWidgetUtil.BUTTON_NETWORKMODE.equals(button.getId())) {
                 // some phones run on networks not supported by this button, so disable it
-                boolean knownState = false;
+                int network_state = -99;
 
                 try {
-                    int networkState = Settings.Secure.getInt(getContentResolver(),
+                    network_state = Settings.Secure.getInt(getContentResolver(),
                             Settings.Secure.PREFERRED_NETWORK_MODE);
-
-                    switch (networkState) {
-                        // list of supported network modes
-                        case Phone.NT_MODE_WCDMA_PREF:
-                        case Phone.NT_MODE_WCDMA_ONLY:
-                        case Phone.NT_MODE_GSM_UMTS:
-                        case Phone.NT_MODE_GSM_ONLY:
-                            knownState = true;
-                            break;
-                    }
                 } catch(Settings.SettingNotFoundException e) {
                     Log.e(TAG, "Unable to retrieve PREFERRED_NETWORK_MODE", e);
                 }
 
-                if (!knownState) {
-                    cb.setEnabled(false);
-                    mNetworkMode.setEnabled(false);
+                switch(network_state) {
+                    // list of supported network modes
+                    case Phone.NT_MODE_WCDMA_PREF:
+                    case Phone.NT_MODE_WCDMA_ONLY:
+                    case Phone.NT_MODE_GSM_UMTS:
+                    case Phone.NT_MODE_GSM_ONLY:
+                        break;
+                    default:
+                        cb.setEnabled(false);
+                        break;
                 }
             } else if (PowerWidgetUtil.BUTTON_WIMAX.equals(button.getId())) {
                 if (!isWimaxEnabled) {
@@ -159,26 +159,6 @@ public class PowerWidgetActivity extends PreferenceActivity implements OnPrefere
             // add to the category
             prefButtons.addPreference(cb);
         }
-
-        ContentResolver cr = getContentResolver();
-        String value;
-
-        value = Settings.System.getString(cr, Settings.System.EXPANDED_BRIGHTNESS_MODE);
-        if (value != null) {
-            mBrightnessMode.setValue(value);
-        }
-        value = Settings.System.getString(cr, Settings.System.EXPANDED_RING_MODE);
-        if (value != null) {
-            mRingMode.setValue(value);
-        }
-        mNetworkMode.setValueIndex(Settings.System.getInt(
-                cr, Settings.System.EXPANDED_NETWORK_MODE, 0));
-        mScreenTimeoutMode.setValueIndex(Settings.System.getInt(
-                cr, Settings.System.EXPANDED_SCREENTIMEOUT_MODE, 0));
-        mFlashMode.setValueIndex(Settings.System.getInt(
-                cr, Settings.System.EXPANDED_FLASH_MODE, 0));
-        mMobileDataNetworkMode.setValueIndex(Settings.System.getInt(
-                cr, Settings.System.EXPANDED_MOBILEDATANETWORK_MODE, 0));
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -211,7 +191,7 @@ public class PowerWidgetActivity extends PreferenceActivity implements OnPrefere
         } else if(preference == mNetworkMode) {
             int value = Integer.valueOf((String)newValue);
             Settings.System.putInt(getContentResolver(), Settings.System.EXPANDED_NETWORK_MODE, value);
-        } else if(preference == mScreenTimeoutMode) {
+        } else if(preference == mScreentimeoutMode) {
             int value = Integer.valueOf((String)newValue);
             Settings.System.putInt(getContentResolver(), Settings.System.EXPANDED_SCREENTIMEOUT_MODE, value);
         } else if(preference == mRingMode) {

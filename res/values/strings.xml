@@ -6,7 +6,7 @@
     <!--  Primary Screen Settings -->
     <string name="application_settings_title_head">Application</string>
     <string name="application_settings_title_subhead">Application settings</string>
-    <string name="application_settings_summary_head">Application moving, install location, communication filtering</string>
+    <string name="application_settings_summary_head">Application Permission Setting, communication filtering</string>
     <string name="display_settings_title_head">Display</string>
     <string name="display_settings_title_subhead">Display settings</string>
     <string name="display_settings_summary_head">Display backlight, animations, rotation</string>
@@ -27,11 +27,7 @@
     <string name="sound_settings_summary_head">Sound volumes, audio focus, quiet hours</string>
     <string name="system_settings_title_head">System</string>
     <string name="system_settings_title_subhead">System settings</string>
-    <string name="system_settings_summary_head">System changelog, stats, update notifications</string>
-
-    <!--  Update Notifications -->
-    <string name="updatenotify_title">Update notifications</string>
-    <string name="updatenotify_summary">Get push notifications of updates</string>
+    <string name="system_settings_summary_head">System changelog</string>
 
     <!-- User interface -->
     <string name="ui_title">User interface</string>
@@ -118,8 +114,8 @@
     <string name="ui_status_bar_cm_signal_text_show_bars">Signal bars</string>
     <string name="ui_status_bar_cm_signal_text_show_text">Signal text</string>
     <string name="ui_status_bar_cm_signal_text_show_text_dbm">Signal text w/dBm</string>
-    <string name="ui_status_bar_headset_title">Show headset icon</string>
-    <string name="ui_status_bar_headset_summary">Headset icon will appear when headset is plugged in</string>
+<!--    <string name="ui_status_bar_headset_title">Show headset icon</string>
+    <string name="ui_status_bar_headset_summary">Headset icon will appear when headset is plugged in</string> -->
 
     <!-- User interface : LED Notifications -->
     <string name="trackball_title">LED notifications</string>
@@ -487,6 +483,10 @@
     <string name="pref_disable_bootanimation_title">Disable boot animation</string>
     <string name="pref_disable_bootanimation_summary">Don\'t show the boot animation for faster boot</string>
 
+    <!-- Performance : Enable Fastcharge  -->
+    <string name="pref_enable_fastcharge_title">Enable USB Fastcharge</string>
+    <string name="pref_enable_fastcharge_summary">Check to enable USB-Fastcharge when connected to a PC.</string>
+
     <!-- Performance : Lock home memory -->
     <string name="pref_lock_home_title">Lock home in memory</string>
     <string name="pref_lock_home_summary">Attempt to keep the current home app in memory at all times</string>
@@ -498,23 +498,6 @@
     <!-- Performance Settings : Warning dialog -->
     <string name="performance_settings_warning_title">WARNING: Dragons Ahead!</string>
     <string name="performance_settings_warning">The options in here will change the performance of your system, potentially for the worse. They are included for experimentation and we request that you do not file bug reports if you have changed any from the defaults</string>
-
-    <!-- Application Settings -->
-    <string name="application_settings_title">Application settings</string>
-
-    <!-- Application Settings : Switch storage mountpoints -->
-    <string name="pref_switch_storage_title">Use internal storage</string>
-    <string name="pref_switch_storage_summary_on">Using expanded internal storage for apps and media (requires reboot)</string>
-    <string name="pref_switch_storage_summary_off">Using removable card for apps and media (requires reboot)</string>
-    <string name="pref_storage_switch_unavailable">This device doesn\'t have expanded internal storage</string>
-
-    <!-- Application Settings : Move any app -->
-    <string name="pref_move_all_apps_title">Allow application moving</string>
-    <string name="pref_move_all_apps_summary">Allow moving of any application to external storage</string>
-
-    <!-- Application Settings : Install Location -->
-    <string name="pref_install_location_title">Install location</string>
-    <string name="pref_install_location_summary">Select where new applications should be installed</string>
 
     <string name="general_title">General</string>
     <string name="camera_title">Camera</string>
