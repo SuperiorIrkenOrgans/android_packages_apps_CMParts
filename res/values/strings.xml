@@ -582,6 +582,7 @@
     <string name="title_toggle_bluetooth">Toggle Bluetooth</string>
     <string name="title_toggle_gps">Toggle GPS</string>
     <string name="title_toggle_sound">Toggle Sound</string>
+    <string name="title_toggle_fcharge">Toggle Fast-Charge</string>
     <string name="title_toggle_brightness">Toggle Brightness</string>
     <string name="title_toggle_sync">Toggle Sync</string>
     <string name="title_toggle_wifiap">Toggle Wifi AP</string>
